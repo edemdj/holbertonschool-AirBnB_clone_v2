@@ -24,3 +24,10 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     cities_instances.append(city)
             return cities_instances
+        
+    if models.storage == "DBStorage":
+        @property
+        def cities(self):
+            """add a guetter methode to return city"""
+            from models import storage
+            return [city for city in storage.all(City).values() if city.state_id == self.id]
